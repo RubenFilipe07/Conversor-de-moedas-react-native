@@ -6,16 +6,16 @@
 <h3>Available currencies</h3>
 <ul>
   <li>Euro</li>
-  <li>Dólar</li>
-  <li>Dólar turismo</li>
-  <li>Dólar canadense</li>
-  <li>Dólar australiano</li>
-  <li>Libra Esterlina</li>
-  <li>Peso argentino</li>
-  <li>Iene Japonês</li>
-  <li>Yuan Chinês</li>
-  <li>Franco Suíço</li>
-  <li>Novo Shekel Israelense</li>
+  <li>Dollar</li>
+  <li>Dollar tourism</li>
+  <li>Canadian dollar</li>
+  <li>Australian Dollar</li>
+  <li>British Pound</li>
+  <li>Argentinian peso</li>
+  <li>Japanese Yen</li>
+  <li>Chinese Yuan</li>
+  <li>Swiss Franc</li>
+  <li>Israeli New Shekel</li>
   <li>Bitcoin</li>
   <li>Ethereum</li>
   <li>Litecoin</li>
