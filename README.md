@@ -27,5 +27,5 @@
 <ul>
   <li><a href="https://docs.awesomeapi.com.br/api-de-moedas">Awesome api</a></li>
   <li><a href="https://materializecss.com/">Materialize framework</a></li>
-  <li><a href="https://jquery.com/">Jquey</a></li>
+  <li><a href="https://jquery.com/">JQuery</a></li>
 </ul>
