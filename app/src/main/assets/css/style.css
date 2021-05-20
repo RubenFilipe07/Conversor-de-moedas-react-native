@@ -1,0 +1,58 @@
+.calcular.btn-large {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 70%;
+}
+
+.centro {
+    text-align: center;
+}
+
+#saida {
+    font-size: x-large;
+}
+
+#atualizacao {
+    font-size: small;
+    color: rgb(151, 151, 151);
+}
+
+.sidenav li a {
+    font-size: x-large;
+}
+
+.sobre {
+    margin-left: 15px;
+}
+
+.sobre a {
+    font-size: large;
+}
+
+footer {
+    font-size: small;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 95%;
+    color: rgb(151, 151, 151);
+}
+
+.input-field {
+    width: 98.5%;
+    margin: 4.2% auto
+}
+
+@media (max-width: 354px) {
+    footer {
+        left: 54%;
+        width: 60%;
+    }
+}
+
+@media (max-height: 560px) {
+    footer {
+        display: none;
+    }
+}

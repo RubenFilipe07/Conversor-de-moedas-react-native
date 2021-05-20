@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script src="js/Jquery.js"></script>
+      <script src="js/app.js"></script>     
+      <script src="js/materialize-efects.js"></script>
+      <script src="js/materialize.js"></script> 
+      <link rel="stylesheet" href="css/materialize.css">
+      <link href="css/fonts.css" rel="stylesheet">
+      <link rel="stylesheet" href="css/style.css">
+      <title>Document</title>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-wrapper teal">
+      <a href="#!" class="brand-logo">Conversor</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+  <ul class="sidenav" id="mobile-demo">
+    <li class="menu-item"><a href="index.html">Conversor</a></li>
+    <li class="menu-item"><a href="sobre.html">Sobre</a></li>
+  </ul>
+
+
+    <div class="input-field">
+      <label>Valor em reais</label> </span>  
+      <input id="entrada" type="number">  
+    
+      <select id="moedas">
+        <option value='NULL'>Moeda</option>
+        <option value='EUR'>Euro</option>
+        <option value='USD'>Dólar</option>
+        <option value='USDT'>Dólar turismo</option>
+        <option value='CAD'>Dólar canadense</option>
+        <option value='AUD'>Dólar australiano</option>
+        <option value='GBP'>Libra Esterlina</option>
+        <option value='ARS'>Peso argentino</option>
+        <option value='JPY'>Iene Japonês</option>
+        <option value='CNY'>Yuan Chinês</option>
+        <option value='CHF'>Franco Suíço</option>
+        <option value='ILS'>Novo Shekel Israelense</option>
+        <option value='BTC'>Bitcoin</option>
+        <option value='ETH'>Ethereum</option>
+        <option value='LTC'>Litecoin</option>
+        <option value='DOGE'>Dogecoin</option>
+        <option value='XRP'>XRP</option>
+    </select>  
+    </div>
+
+
+  <a class="waves-effect waves-light btn-large teal calcular" onclick="converter()">Calcular</a>
+  <div class="centro">
+    <h1 id="saida"></h1> 
+    <h3 id="atualizacao"></h3>
+  </div>
+
+  <footer>Desenvolvido por Rúben Filipe</footer>
+
+</body>
+</html>
