@@ -41,7 +41,8 @@ footer {
 
 .input-field {
     width: 98.5%;
-    margin: 4.2% auto
+    margin-left: auto;
+    margin-right: auto;
 }
 
 @media (max-width: 354px) {

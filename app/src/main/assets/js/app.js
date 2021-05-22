@@ -8,7 +8,7 @@ $.ajax({
         resultado = data
     },
     error: function (data) {
-        M.toast({ html:'Erro! o site não conseguiu carregar os valores atuais da cotação. Tente novamente mais tarde. :('})
+        M.toast({ html:'Erro! o site não conseguiu carregar os valores atuais da cotação. Tente novamente mais tarde. :(', displayLength: 10000})
     }
 });
 
@@ -51,7 +51,7 @@ function converter() {
     var selecionado = document.querySelector("#moedas").value;
 
     if (isNaN(num) == true && selecionado == "NULL") {
-        M.toast({ html: 'Digite um valor e escolha uma moeda!' })
+        M.toast({ html: 'Digite um valor e escolha uma moeda!'})
     } else {
         if (isNaN(num) == true) {
             M.toast({ html: "Digite um valor!" })
@@ -69,7 +69,7 @@ function converter() {
         calculo = num * euro
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'EUR' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("EUR")
     }
 
@@ -77,7 +77,7 @@ function converter() {
         calculo = num * dolar
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'USD' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("USD")
     }
 
@@ -85,7 +85,7 @@ function converter() {
         calculo = num * dolarTurismo
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'USD' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("USDT")
     }
 
@@ -93,7 +93,7 @@ function converter() {
         calculo = num * dolarCanadense
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'CAD' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("CAD")
     }
 
@@ -101,7 +101,7 @@ function converter() {
         calculo = num * dolarAustraliano
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'AUD' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("AUD")
     }
 
@@ -109,7 +109,7 @@ function converter() {
         calculo = num * libra
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'GBP' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("GBP")
     }
 
@@ -117,7 +117,7 @@ function converter() {
         calculo = num * peso
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'ARS' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("ARS")
     }
 
@@ -125,7 +125,7 @@ function converter() {
         calculo = num * iene
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'JPY' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("JPY")
     }
 
@@ -133,7 +133,7 @@ function converter() {
         calculo = num * yuan
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'CNY' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("CNY")
     }
 
@@ -141,7 +141,7 @@ function converter() {
         calculo = num * franco
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'CHF' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("CHF")
     }
 
@@ -149,7 +149,7 @@ function converter() {
         calculo = num * shekel
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'ILS' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("ILS")
     }
 
@@ -158,7 +158,7 @@ function converter() {
         calculo = num * btcoin
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'BTC' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("BTC")
     }
 
@@ -166,7 +166,7 @@ function converter() {
         calculo = num * ethereum
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'ETH' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("ETH")
     }
 
@@ -174,7 +174,7 @@ function converter() {
         calculo = num * ltcoin
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'LTC' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("LTC")
     }
 
@@ -182,7 +182,7 @@ function converter() {
         calculo = num * dogecoin
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'XDG' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("DOGE")
     }
 
@@ -190,7 +190,7 @@ function converter() {
         calculo = num * xrp
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'XRP' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} vale ${calculo}`
+        saida.innerHTML = `${num} = ${calculo}`
         getAtualizacao("XRP")
     }
 

@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.rubenfilipe07.conversor", appContext.getPackageName());
+        assertEquals("com.rubenfilipe07.currency_converter", appContext.getPackageName());
     }
 }
