@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.rubenfilipe07.conversor",
+  "applicationId": "com.rubenfilipe07.currency_converter",
   "variantName": "release",
   "elements": [
     {
