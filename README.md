@@ -4,7 +4,7 @@
 <a href="https://github.com/RubenFilipe07/Android-currency-converter-app/raw/main/Conversor%20de%20Moedas.apk" download>Apk File</a>
 
 <h3>Preview</h3>
-<img src="https://user-images.githubusercontent.com/53026536/119211787-9ac83f80-ba8a-11eb-9f0d-b40f3689fe4a.jpg" width="250"></img>
+<img src="https://user-images.githubusercontent.com/53026536/119211813-ca774780-ba8a-11eb-880d-9380514a2150.jpg" width="260"></img>
 
 
 
