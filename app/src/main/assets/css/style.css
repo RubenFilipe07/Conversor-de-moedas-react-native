@@ -1,3 +1,9 @@
+:root{
+    --green: #4caf50;
+    --gray: #727272;
+    --light-gray: #979797; 
+}
+
 .calcular.btn-large {
     position: absolute;
     left: 50%;
@@ -10,12 +16,12 @@
 }
 
 #saida {
-    font-size: x-large;
+    font-size: xx-large;
 }
 
 #atualizacao {
     font-size: small;
-    color: rgb(151, 151, 151);
+    color: var(--light-gray);
 }
 
 .sidenav li a {
@@ -30,19 +36,49 @@
     font-size: large;
 }
 
+.no-transition{
+    transition: none;
+}
+
 footer {
     font-size: small;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     top: 95%;
-    color: rgb(151, 151, 151);
+    color: var(--light-gray);
 }
 
 .input-field {
     width: 98.5%;
     margin-left: auto;
     margin-right: auto;
+    user-select: none;
+}
+
+.input-field input:focus + label {
+    color: var(--green) !important;
+}
+
+.input-field input:focus {
+    border-bottom: 1px solid var(--green) !important;
+    box-shadow: 0 1px 0 0 var(--green) !important
+}
+
+.dropdown-content li>span {
+    color: var(--green);
+}
+
+.input-field>label {
+    color: var(--gray);
+}
+
+.select-wrapper input.select-dropdown {
+    color: var(--gray);
+}
+
+.select-wrapper input.select-dropdown:focus {
+    color: var(--green);
 }
 
 @media (max-width: 354px) {

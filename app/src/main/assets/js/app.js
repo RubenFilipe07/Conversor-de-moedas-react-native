@@ -8,14 +8,13 @@ $.ajax({
         resultado = data
     },
     error: function (data) {
-        M.toast({ html:'Erro! o site não conseguiu carregar os valores atuais da cotação. Tente novamente mais tarde. :(', displayLength: 10000})
+        M.toast({ html:'Erro! o site não conseguiu carregar os valores atuais da cotação. Tente novamente mais tarde. :(', displayLength: 15000})
     }
 });
 
 function converter() {
     var euro = resultado["EUR"]["bid"]
     var dolar = resultado["USD"]["bid"]
-    var dolarTurismo = resultado["USDT"]["bid"]
     var dolarCanadense = resultado["CAD"]["bid"]
     var dolarAustraliano = resultado["AUD"]["bid"]
     var libra = resultado["GBP"]["bid"]
@@ -30,7 +29,7 @@ function converter() {
     var dogecoin = resultado["DOGE"]["bid"]
     var xrp = resultado["XRP"]["bid"]
 
-    function getAtualizacao(moeda) {
+    function getHorarioAtualizacao(moeda) {
         var data = (resultado[moeda]["create_date"])
         //Mudando a formatação da data para DD/MM/AA 
         var dia = data.substring(8, 10)
@@ -70,7 +69,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'EUR' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("EUR")
+        getHorarioAtualizacao("EUR")
     }
 
     if (selecionado == "USD" && isNaN(num) == false) {
@@ -78,15 +77,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'USD' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("USD")
-    }
-
-    if (selecionado == "USDT" && isNaN(num) == false) {
-        calculo = num * dolarTurismo
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'USD' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("USDT")
+        getHorarioAtualizacao("USD")
     }
 
     if (selecionado == "CAD" && isNaN(num) == false) {
@@ -94,7 +85,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'CAD' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("CAD")
+        getHorarioAtualizacao("CAD")
     }
 
     if (selecionado == "AUD" && isNaN(num) == false) {
@@ -102,7 +93,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'AUD' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("AUD")
+        getHorarioAtualizacao("AUD")
     }
 
     if (selecionado == "GBP" && isNaN(num) == false) {
@@ -110,7 +101,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'GBP' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("GBP")
+        getHorarioAtualizacao("GBP")
     }
 
     if (selecionado == "ARS" && isNaN(num) == false) {
@@ -118,7 +109,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'ARS' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("ARS")
+        getHorarioAtualizacao("ARS")
     }
 
     if (selecionado == "JPY" && isNaN(num) == false) {
@@ -126,7 +117,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'JPY' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("JPY")
+        getHorarioAtualizacao("JPY")
     }
 
     if (selecionado == "CNY" && isNaN(num) == false) {
@@ -134,7 +125,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'CNY' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("CNY")
+        getHorarioAtualizacao("CNY")
     }
 
     if (selecionado == "CHF" && isNaN(num) == false) {
@@ -142,7 +133,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'CHF' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("CHF")
+        getHorarioAtualizacao("CHF")
     }
 
     if (selecionado == "ILS" && isNaN(num) == false) {
@@ -150,7 +141,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'ILS' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("ILS")
+        getHorarioAtualizacao("ILS")
     }
 
     if (selecionado == "BTC" && isNaN(num) == false) {
@@ -159,7 +150,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'BTC' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("BTC")
+        getHorarioAtualizacao("BTC")
     }
 
     if (selecionado == "ETH" && isNaN(num) == false) {
@@ -167,7 +158,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'ETH' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("ETH")
+        getHorarioAtualizacao("ETH")
     }
 
     if (selecionado == "LTC" && isNaN(num) == false) {
@@ -175,7 +166,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'LTC' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("LTC")
+        getHorarioAtualizacao("LTC")
     }
 
     if (selecionado == "DOGE" && isNaN(num) == false) {
@@ -183,7 +174,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'XDG' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("DOGE")
+        getHorarioAtualizacao("DOGE")
     }
 
     if (selecionado == "XRP" && isNaN(num) == false) {
@@ -191,7 +182,7 @@ function converter() {
         num = num.toLocaleString('en-us', { style: 'currency', currency: 'XRP' });
         calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         saida.innerHTML = `${num} = ${calculo}`
-        getAtualizacao("XRP")
+        getHorarioAtualizacao("XRP")
     }
 
 }
