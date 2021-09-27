@@ -56,6 +56,11 @@ footer {
     user-select: none;
 }
 
+.link-bold a{
+    color: #0969da;
+    font-weight: 600;
+}
+
 .input-field input:focus + label {
     color: var(--green) !important;
 }

@@ -1,36 +1,46 @@
 var resultado;
 
-$.ajax({
-    type: "GET",
-    dataType: "JSON",
-    url: "https://economia.awesomeapi.com.br/json/all",
-    success: function (data) {
-        resultado = data
-    },
-    error: function (data) {
-        M.toast({ html:'Erro! o site não conseguiu carregar os valores atuais da cotação. Tente novamente mais tarde. :(', displayLength: 15000})
-    }
-});
+function getDados(){
+    $.ajax({
+        type: "GET",
+        dataType: "JSON",
+        url: "https://economia.awesomeapi.com.br/json/all",
+        success: function (data) {
+            resultado = data
+        },
+        error: function () {
+            M.toast({ html:'Erro! o site não conseguiu carregar os valores atuais da cotação. Tente novamente mais tarde.', displayLength: 15000})
+        }
+    });
+}
 
 function converter() {
-    var euro = resultado["EUR"]["bid"]
-    var dolar = resultado["USD"]["bid"]
-    var dolarCanadense = resultado["CAD"]["bid"]
-    var dolarAustraliano = resultado["AUD"]["bid"]
-    var libra = resultado["GBP"]["bid"]
-    var peso = resultado["ARS"]["bid"]
-    var iene = resultado["JPY"]["bid"]
-    var yuan = resultado["CNY"]["bid"]
-    var franco = resultado["CHF"]["bid"]
-    var shekel = resultado["ILS"]["bid"]
-    var btcoin = resultado["BTC"]["bid"]
-    var ethereum = resultado["ETH"]["bid"]
-    var ltcoin = resultado["LTC"]["bid"]
-    var dogecoin = resultado["DOGE"]["bid"]
-    var xrp = resultado["XRP"]["bid"]
+    
+    try {
+        var euro = resultado["EUR"]["bid"]
+        var dolar = resultado["USD"]["bid"]
+        var dolarCanadense = resultado["CAD"]["bid"]
+        var dolarAustraliano = resultado["AUD"]["bid"]
+        var libra = resultado["GBP"]["bid"]
+        var peso = resultado["ARS"]["bid"]
+        var iene = resultado["JPY"]["bid"]
+        var yuan = resultado["CNY"]["bid"]
+        var franco = resultado["CHF"]["bid"]
+        var shekel = resultado["ILS"]["bid"]
+        var btcoin = resultado["BTC"]["bid"]
+        var ethereum = resultado["ETH"]["bid"]
+        var ltcoin = resultado["LTC"]["bid"]
+        var dogecoin = resultado["DOGE"]["bid"]
+        var xrp = resultado["XRP"]["bid"]
+      
+    } catch (error) {
+        if(euro === undefined){
+            getDados()
+        }
+    }  
 
-    function getHorarioAtualizacao(moeda) {
-        var data = (resultado[moeda]["create_date"])
+    function getHorarioAtualizacao(codigoMoeda) {
+        var data = (resultado[codigoMoeda]["create_date"])
         //Mudando a formatação da data para DD/MM/AA 
         var dia = data.substring(8, 10)
         var mes = data.substring(5, 7)
@@ -41,148 +51,97 @@ function converter() {
         atualizacao.innerHTML = 'Cotação atualizada em ' + dataFormatada;
     }
 
-    var num = document.querySelector("#entrada").value;
-    num = parseFloat(num);
+    var numeroDigitado = document.querySelector("#entrada").value;
+    numeroDigitado = parseFloat(numeroDigitado);
 
     var calculo;
 
     var saida = document.querySelector("#saida");
     var selecionado = document.querySelector("#moedas").value;
 
-    if (isNaN(num) == true && selecionado == "NULL") {
-        M.toast({ html: 'Digite um valor e escolha uma moeda!'})
+    if (isNaN(numeroDigitado) == true && selecionado == "NULL" && euro != undefined) {
+        M.toast({ html: 'Digite um valor e escolha uma moeda!', displayLength: 2500})
     } else {
-        if (isNaN(num) == true) {
-            M.toast({ html: "Digite um valor!" })
+        if (isNaN(numeroDigitado) == true && euro != undefined) {
+            M.toast({ html: "Digite um valor!", displayLength: 2500})
         }
-        if (selecionado == "NULL") {
-            M.toast({ html: "Escolha uma moeda!" })
+        if (selecionado == "NULL" && euro != undefined) {
+            M.toast({ html: "Escolha uma moeda!", displayLength: 2500})
         }
     }
 
-    if (num <= 0) {
-        M.toast({ html: "Valor inválido! Digite somente valores positivos e diferentes de zero" })
+    function calcular(valorMoeda, codigoMoeda){
+        calculo = numeroDigitado * valorMoeda
+        numeroDigitado = numeroDigitado.toLocaleString('en-us', { style: 'currency', currency: codigoMoeda });
+        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
+        saida.innerHTML = `${numeroDigitado} = ${calculo}`
+        getHorarioAtualizacao(codigoMoeda)
     }
 
-    if (selecionado == "EUR" && isNaN(num) == false) {
-        calculo = num * euro
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'EUR' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("EUR")
+
+    if (numeroDigitado <= 0) {
+        M.toast({ html: "Valor inválido! Digite somente valores positivos e diferentes de zero", displayLength: 4000})
     }
 
-    if (selecionado == "USD" && isNaN(num) == false) {
-        calculo = num * dolar
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'USD' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("USD")
+    if (selecionado == "EUR" && !isNaN(numeroDigitado) && !isNaN(euro)) {
+        calcular(euro, "EUR")
     }
 
-    if (selecionado == "CAD" && isNaN(num) == false) {
-        calculo = num * dolarCanadense
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'CAD' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("CAD")
+    if (selecionado == "USD" && !isNaN(numeroDigitado) && !isNaN(dolar)) {
+        calcular(dolar, "USD")
     }
 
-    if (selecionado == "AUD" && isNaN(num) == false) {
-        calculo = num * dolarAustraliano
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'AUD' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("AUD")
+    if (selecionado == "CAD" && !isNaN(numeroDigitado) && !isNaN(dolarCanadense)) {
+        calcular(dolarCanadense, "CAD")        
     }
 
-    if (selecionado == "GBP" && isNaN(num) == false) {
-        calculo = num * libra
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'GBP' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("GBP")
+    if (selecionado == "AUD" && !isNaN(numeroDigitado) && !isNaN(dolarAustraliano)) {
+        calcular(dolarAustraliano, "AUD")
     }
 
-    if (selecionado == "ARS" && isNaN(num) == false) {
-        calculo = num * peso
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'ARS' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("ARS")
+    if (selecionado == "GBP" && !isNaN(numeroDigitado) && !isNaN(libra)) {
+        calcular(libra, "GBP")
     }
 
-    if (selecionado == "JPY" && isNaN(num) == false) {
-        calculo = num * iene
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'JPY' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("JPY")
+    if (selecionado == "ARS" && !isNaN(numeroDigitado) && !isNaN(peso)) {
+        calcular(peso, "ARS")
     }
 
-    if (selecionado == "CNY" && isNaN(num) == false) {
-        calculo = num * yuan
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'CNY' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("CNY")
+    if (selecionado == "JPY" && !isNaN(numeroDigitado) && !isNaN(iene)) {
+        calcular(iene, "JPY")
     }
 
-    if (selecionado == "CHF" && isNaN(num) == false) {
-        calculo = num * franco
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'CHF' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("CHF")
+    if (selecionado == "CNY" && !isNaN(numeroDigitado) && !isNaN(yuan)) {
+        calcular(yuan, "CNY")
     }
 
-    if (selecionado == "ILS" && isNaN(num) == false) {
-        calculo = num * shekel
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'ILS' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("ILS")
+    if (selecionado == "CHF" && !isNaN(numeroDigitado) && !isNaN(franco)) {
+        calcular(franco, "CHF")
     }
 
-    if (selecionado == "BTC" && isNaN(num) == false) {
-        btcoin = btcoin
-        calculo = num * btcoin
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'BTC' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("BTC")
+    if (selecionado == "ILS" && !isNaN(numeroDigitado) && !isNaN(shekel)) {
+        calcular(shekel, "ILS")
     }
 
-    if (selecionado == "ETH" && isNaN(num) == false) {
-        calculo = num * ethereum
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'ETH' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("ETH")
+    if (selecionado == "BTC" && !isNaN(numeroDigitado) && !isNaN(btcoin)) {
+        btcoin = btcoin * 1000
+        calcular(btcoin, "BTC")
     }
 
-    if (selecionado == "LTC" && isNaN(num) == false) {
-        calculo = num * ltcoin
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'LTC' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("LTC")
+    if (selecionado == "ETH" && !isNaN(numeroDigitado) && !isNaN(ethereum)) {
+        calcular(ethereum, "ETH")
     }
 
-    if (selecionado == "DOGE" && isNaN(num) == false) {
-        calculo = num * dogecoin
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'XDG' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("DOGE")
+    if (selecionado == "LTC" && !isNaN(numeroDigitado) && !isNaN(ltcoin)) {
+        calcular(ltcoin, "LTC")
     }
 
-    if (selecionado == "XRP" && isNaN(num) == false) {
-        calculo = num * xrp
-        num = num.toLocaleString('en-us', { style: 'currency', currency: 'XRP' });
-        calculo = calculo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-        saida.innerHTML = `${num} = ${calculo}`
-        getHorarioAtualizacao("XRP")
+    if (selecionado == "DOGE" && !isNaN(numeroDigitado) && !isNaN(dogecoin)) {
+        calcular(dogecoin, "XDG")
+    }
+
+    if (selecionado == "XRP" && !isNaN(numeroDigitado) && !isNaN(xrp)) {
+        calcular(xrp, "XRP")
     }
 
 }
