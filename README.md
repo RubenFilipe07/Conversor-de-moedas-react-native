@@ -12,7 +12,6 @@
 <ul>
   <li>Euro</li>
   <li>Dólar</li>
-  <li>Dólar turismo</li>
   <li>Dólar canadense</li>
   <li>Dólar australiano</li>
   <li>Libra Esterlina</li>
