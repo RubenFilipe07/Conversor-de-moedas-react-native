@@ -34,3 +34,6 @@
   <li><a href="https://fonts.google.com/icons">Material icons</a></li>
   <li><a href="https://jquery.com/">JQuery</a></li>
 </ul>
+
+<h3>Licensa</h3>
+<a href="https://github.com/RubenFilipe07/Android-currency-converter-app/blob/main/LICENSE">MIT</a>
