@@ -1,4 +1,4 @@
-# conversor-de-moedas-react-native
+# Conversor-de-moedas-react-native
 
 <h3>Download</h3>
 <a  href="https://play.google.com/store/apps/details?id=com.rubenfilipe07.currency_converter">
@@ -25,7 +25,7 @@
 <ul>
     <li><a href="https://reactnative.dev/">React Native</a></li>    
     <li><a href="https://axios-http.com/ptbr/docs/intro">Axios</a></li>
-    <li><a href="https://reactnativepaper.com/"></a>React Native Paper</li>
+    <li><a href="https://reactnativepaper.com/">React Native Paper</a></li>
     <li><a href="https://www.npmjs.com/package/react-native-paper-dropdown">React Native Paper Dropdown</li>
     <li><a href="https://docs.awesomeapi.com.br/api-de-moedas">AwesomeApi</a></li>
 </ul>
