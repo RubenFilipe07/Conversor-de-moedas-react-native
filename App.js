@@ -2,9 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, Linking } from 'react-native';
 import axios from 'axios';
-import { Provider as PaperProvider, Button, TextInput, Text, Snackbar, Appbar, Menu,  DefaultTheme } from 'react-native-paper';
+import { Provider as PaperProvider, Button, TextInput, Text, Snackbar, Appbar, Menu, Chip, DefaultTheme} from 'react-native-paper';
 import DropDown from "react-native-paper-dropdown";
-
+import {expo} from './app.json'
 export default function App() {
 
 const [entrada, setEntrada] = useState('');
@@ -18,16 +18,18 @@ const [francoSuico, setFrancoSuico] = useState(0);
 const [dolarCanadense, setDolarCanadense] = useState(0);
 const [yuan, setYuan] = useState(0);
 const [pesoArgentino, setPesoArgentino] = useState(0);
+const [liraTurca, setLiraTurca] = useState(0);
+
+const [updateInfo, setUpdateInfo] = useState(' ');
 
 const [showDropDown, setShowDropDown] = useState(false);
 const [moeda, setMoeda] = useState("");
 
-const [mensagemErroVisivel, setMensagemErroVisivel] = useState(false);
-const [mensagemErro, setMensagemErro] = useState('');
-
-
+const [showErrorMessage, setShowErrorMessage] = useState(false);
+const [errorMessage, setErrorMessage] = useState('');
 const [showAbout, setShowAbout] = useState(false);
 const [showHome, setShowHome] = useState(true);
+const [menuVisible, setMenuVisible] = useState(false);
 
 const currencyList = [
   { label: "Dólar", value: "usd" },
@@ -39,8 +41,8 @@ const currencyList = [
   { label: "Dólar Canadense", value: "cad" },
   { label: "Yuan", value: "cny" },
   { label: "Peso Argentino", value: "ars" },
+  { label: "Lira Turca", value: "try" },
 ];
-
 
 const theme = {
   ...DefaultTheme,
@@ -53,9 +55,8 @@ const theme = {
   },
 };
 
-
 const getMonetary = () => {
-  axios.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,GBP-BRL,JPY-BRL,AUD-BRL,CHF-BRL,CAD-BRL,CNY-BRL,ARS-BRL')
+  axios.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,GBP-BRL,JPY-BRL,AUD-BRL,CHF-BRL,CAD-BRL,CNY-BRL,ARS-BRL,TRY-BRL')
     .then(res => {
       handlerMonetary(res.data);
     }).catch(err => {
@@ -67,85 +68,98 @@ useEffect(() => {
   getMonetary();
 }, []);
 
-
 const handlerMonetary = (data) => {
-  setDolar(data.USDBRL.bid);
-  setEuro(data.EURBRL.bid);
-  setLibra(data.GBPBRL.bid);
-  setIene(data.JPYBRL.bid);
-  setDolarAustraliano(data.AUDBRL.bid);
-  setFrancoSuico(data.CHFBRL.bid);
-  setDolarCanadense(data.CADBRL.bid);
-  setYuan(data.CNYBRL.bid);
-  setPesoArgentino(data.ARSBRL.bid);
+  setDolar(data.USDBRL);
+  setEuro(data.EURBRL);
+  setLibra(data.GBPBRL);
+  setIene(data.JPYBRL);
+  setDolarAustraliano(data.AUDBRL);
+  setFrancoSuico(data.CHFBRL);
+  setDolarCanadense(data.CADBRL);
+  setYuan(data.CNYBRL);
+  setPesoArgentino(data.ARSBRL);
+  setLiraTurca(data.TRYBRL);
 }
 
-const calcular = () => {
+
+const handlerUpdateInfo = (date) => {
+const dt = date;
+setUpdateInfo(`Atualizado em ${dt.substring(8, 10)}/${dt.substring(5, 7)}/${dt.substring(2, 4)} às ${dt.substring(11, 16)}`);
+}
+
+function calc(moedaEscolhida, simboloMoeda){
+  setSaida(`${simboloMoeda}${entrada} = R$ ${(entrada * moedaEscolhida).toFixed(2).replace('.', ',')}`);
+  setShowErrorMessage(false);
+}
+
+
+const handlerInputs = () => {
   
   if(entrada === '' && moeda === ''){
-    setMensagemErro('Digite um valor e selecione uma moeda');
-    return;
+    setErrorMessage('Digite um valor e selecione uma moeda');
   }
   else if (entrada === '') {
-    setMensagemErroVisivel(true);
-    setMensagemErro('Digite um valor');
+    setShowErrorMessage(true);
+    setErrorMessage('Digite um valor');
     return;
   }
   else if(moeda === ''){
-    setMensagemErro('Selecione uma moeda');
+    setErrorMessage('Selecione uma moeda');
     return;
   } 
   else if(entrada<1){
-    setMensagemErroVisivel(true);
-    setMensagemErro('Digite um valor maior que zero');
+    setShowErrorMessage(true);
+    setErrorMessage('Digite um valor maior que zero');
     return;
   }
 
   switch(moeda){
-    case 'usd':
-      setSaida(`$${entrada} = R$ ${(entrada * dolar).toFixed(2).replace('.', ',')}`);
-      setMensagemErroVisivel(false);
+    case 'usd':  
+      calc(dolar.bid, "$");
+      handlerUpdateInfo(dolar.create_date);
       break;
     case 'eur':
-      setSaida(`€${entrada} = R$ ${(entrada * euro).toFixed(2).replace('.', ',')}`);
-      setMensagemErroVisivel(false);
+      calc(euro.bid, "€");
+      handlerUpdateInfo(euro.create_date);
       break;
     case 'gbp':
-      setSaida(`£${entrada} = R$ ${(entrada * libra).toFixed(2).replace('.', ',')}`);
-      setMensagemErroVisivel(false);
+      calc(libra.bid, "£");
+      handlerUpdateInfo(libra.create_date);
       break;
     case 'jpy':
-      setSaida(`¥${entrada} = R$ ${(entrada * iene).toFixed(2).replace('.', ',')}`);
-      setMensagemErroVisivel(false);
+      calc(iene.bid, "¥");
+      handlerUpdateInfo(iene.create_date);
       break;
     case 'aud':
-      setSaida(`A$${entrada} = R$ ${(entrada * dolarAustraliano).toFixed(2).replace('.', ',')}`);
-      setMensagemErroVisivel(false);
+      calc(dolarAustraliano.bid, "A$");
+      handlerUpdateInfo(dolarAustraliano.create_date);
       break;
     case 'chf':
-      setSaida(`₣${entrada} = R$ ${(entrada * francoSuico).toFixed(2).replace('.', ',')}`);
-      setMensagemErroVisivel(false);
+      calc(francoSuico.bid, "₣");
+      handlerUpdateInfo(francoSuico.create_date);
       break;
     case 'cad':
-      setSaida(`C$${entrada} = R$ ${(entrada * dolarCanadense).toFixed(2).replace('.', ',')}`);
-      setMensagemErroVisivel(false);
+      calc(dolarCanadense.bid, "C$");
+      handlerUpdateInfo(dolarCanadense.create_date);
       break;
     case 'cny':
-      setSaida(`¥${entrada} = R$ ${(entrada * yuan).toFixed(2).replace('.', ',')}`);
-      setMensagemErroVisivel(false);
+      calc(yuan.bid, "¥");
+      handlerUpdateInfo(yuan.create_date);
       break;
     case 'ars':
-      setSaida(`$${entrada} = R$ ${(entrada * pesoArgentino).toFixed(2).replace('.', ',')}`);
-      setMensagemErroVisivel(false);
+      calc(pesoArgentino.bid, "$");
+      handlerUpdateInfo(pesoArgentino.create_date);
+      break;
+    case 'try':
+      calc(liraTurca.bid, "₺");
+      handlerUpdateInfo(liraTurca.create_date);
       break;
     default:
       setSaida('R$ 0,00');
-      setMensagemErroVisivel(true);
+      setShowErrorMessage(true);
   }
+
 }
-
-
-const [menuVisible, setMenuVisible] = useState(false);
 
   return (
     <PaperProvider theme={theme}>
@@ -161,7 +175,6 @@ const [menuVisible, setMenuVisible] = useState(false);
         </Menu>
       </Appbar.Header>
      
-    
         {showHome && (
            <View style={styles.container}>
  <TextInput onChangeText={setEntrada} style={styles.inputs} value={entrada.toString()}   keyboardType="numeric" label={"Valor em reais"}></TextInput>
@@ -179,30 +192,31 @@ const [menuVisible, setMenuVisible] = useState(false);
  </View>
 
  <Text style={styles.saida}>{saida}</Text>
- <Button onPress={calcular} mode="contained" style={styles.button}>CALCULAR</Button>
+ <Text style={styles.update}>{updateInfo}</Text>
+ <Button onPress={handlerInputs} mode="contained" style={styles.button}>CALCULAR</Button>
  <Text style={styles.footer}>Desenvolvido por Rúben Filipe</Text>
  </View>
         )}
         {showAbout && (
           <View style={styles.container}>
-            <Text style={styles.about}>Conversor de moedas</Text>
-            <Text style={styles.about}>Feito com React Native</Text>
-            <Text style={styles.about}>Desenvolvido por Rúben Filipe</Text>
-            <Text style={styles.about}>Provedor de informações: AwesomeApi</Text>
-            <Button onPress={() => Linking.openURL("https://docs.awesomeapi.com.br/api-de-moedas")} mode="contained" style={styles.button} color="#36b93f" icon={'api'}>AwesomeApi</Button>
+            <Text style={styles.aboutHeader}>Sobre o aplicativo</Text>
+            <Text style={styles.aboutText}>Este aplicativo é um projeto open source e todo código fonte está contido no repositório do github abaixo. As informações da cotação utilizadas nos cálculos são providas pela AwesomeApi.com.br e são de sua responsabilidade.</Text>
             <Button onPress={() => Linking.openURL("https://github.com/RubenFilipe07/Android-currency-converter-app")} mode="contained" style={styles.button} color="#f5f5f5" icon={'github'}>Github Repo</Button>
-            <Button onPress={() => setShowHome(true) & setShowAbout(false)} mode="contained" style={styles.button} icon={'arrow-left'}>Voltar</Button>
+            <Button onPress={() => Linking.openURL("https://docs.awesomeapi.com.br/api-de-moedas")} mode="contained" style={styles.button} color="#36b93f" icon={'api'}>AwesomeApi</Button>
+            <Button onPress={() => Linking.openURL("https://rubenfilipe07.me")} mode="contained" style={styles.button} color="#bababa" icon={'account-details'}>Sobre o autor</Button>
+            <Button onPress={() => Linking.openURL("https://rubenfilipe07.me")} mode="contained" style={styles.button} color="#263238" icon={'google-play'}>Outros Apps</Button>
+            <Chip style={styles.reactNativeBadge} icon="react" mode="outlined" selectedColor="#15add6">Feito com React Native</Chip>
+            <Text style={styles.footer}>Versão: {expo.version}</Text>
           </View>
         )}
    
-      
         <Snackbar
-          visible={mensagemErroVisivel}
-          onDismiss={() => setMensagemErroVisivel(false)}
+          visible={showErrorMessage}
+          onDismiss={() => setShowErrorMessage(false)}
           action={{
             label: 'Ok',
           }}>
-          {mensagemErro}
+          {errorMessage}
         </Snackbar>
 
       <StatusBar style="auto" />
@@ -213,12 +227,10 @@ const [menuVisible, setMenuVisible] = useState(false);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //backgroundColor: '#212121',
     alignItems: 'center',
-   paddingTop: 50,
+    paddingTop: 50,
   },
   saida: {
-   // color: '#fff',
     fontSize: 35,
     margin: 15,
   },
@@ -239,9 +251,22 @@ const styles = StyleSheet.create({
     left: 'auto',
     right: 'auto',
   },
-  about: {
-    //color: '#fff',
-    fontSize: 20,
+  aboutHeader: {
+    fontSize: 25,
+  },
+  update: {
+    fontSize: 12,
+    color: '#8c9494',
+  },
+  aboutText: {
+    width: '90%',
     margin: 15,
-  }
+  },
+  reactNativeBadge: {
+    position: 'absolute',
+    bottom: 150,
+    left: 'auto',
+    right: 'auto',
+  },
+
 });
