@@ -204,7 +204,7 @@ const handlerInputs = () => {
             <Button onPress={() => Linking.openURL("https://github.com/RubenFilipe07/Android-currency-converter-app")} mode="contained" style={styles.button} color="#f5f5f5" icon={'github'}>Github Repo</Button>
             <Button onPress={() => Linking.openURL("https://docs.awesomeapi.com.br/api-de-moedas")} mode="contained" style={styles.button} color="#36b93f" icon={'api'}>AwesomeApi</Button>
             <Button onPress={() => Linking.openURL("https://rubenfilipe07.me")} mode="contained" style={styles.button} color="#bababa" icon={'account-details'}>Sobre o autor</Button>
-            <Button onPress={() => Linking.openURL("https://rubenfilipe07.me")} mode="contained" style={styles.button} color="#263238" icon={'google-play'}>Outros Apps</Button>
+            <Button onPress={() => Linking.openURL("https://play.google.com/store/apps/dev?id=6757498449764923052")} mode="contained" style={styles.button} color="#263238" icon={'google-play'}>Outros Apps</Button>
             <Chip style={styles.reactNativeBadge} icon="react" mode="outlined" selectedColor="#15add6">Feito com React Native</Chip>
             <Text style={styles.footer}>Versão: {expo.version}</Text>
           </View>
