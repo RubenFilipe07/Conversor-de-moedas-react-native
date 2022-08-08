@@ -19,14 +19,22 @@ const [dolarCanadense, setDolarCanadense] = useState(0);
 const [yuan, setYuan] = useState(0);
 const [pesoArgentino, setPesoArgentino] = useState(0);
 const [liraTurca, setLiraTurca] = useState(0);
+const [dolarHongKong, setDolarHongKong] = useState(0);
+const [dolarNeozelandes, setDolarNeozelandes] = useState(0);
+const [dolarSingapura, setDolarSingapura] = useState(0);
+const [coroaNorueguesa, setCoroaNorueguesa] = useState(0);
+const [pesoMexicano, setPesoMexicano] = useState(0);
+const [rupiaIndiana, setRupiaIndiana] = useState(0);
+const [rublo, setRublo] = useState(0);
+const [dirham, setDirham] = useState(0); 
+const [coroaSueca, setCoroaSueca] = useState(0);
 
 const [updateInfo, setUpdateInfo] = useState(' ');
-
-const [showDropDown, setShowDropDown] = useState(false);
 const [moeda, setMoeda] = useState("");
+const [errorMessage, setErrorMessage] = useState('');
 
 const [showErrorMessage, setShowErrorMessage] = useState(false);
-const [errorMessage, setErrorMessage] = useState('');
+const [showDropDown, setShowDropDown] = useState(false);
 const [showAbout, setShowAbout] = useState(false);
 const [showHome, setShowHome] = useState(true);
 const [menuVisible, setMenuVisible] = useState(false);
@@ -42,6 +50,15 @@ const currencyList = [
   { label: "Yuan", value: "cny" },
   { label: "Peso Argentino", value: "ars" },
   { label: "Lira Turca", value: "try" },
+  { label: "Dólar Hong Kong", value: "hkd" },
+  { label: "Dólar Neozelandês", value: "nzd" },
+  { label: "Dólar Singapura", value: "sgd" },
+  { label: "Coroa Norueguesa", value: "nok" },
+  { label: "Peso Mexicano", value: "mxn" },
+  { label: "Rupia Indiana", value: "inr" },
+  { label: "Rublo", value: "rub" },
+  { label: "Dirham", value: "aed" },
+  { label: "Coroa Sueca", value: "sek" },
 ];
 
 const theme = {
@@ -56,7 +73,7 @@ const theme = {
 };
 
 const getMonetary = () => {
-  axios.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,GBP-BRL,JPY-BRL,AUD-BRL,CHF-BRL,CAD-BRL,CNY-BRL,ARS-BRL,TRY-BRL')
+  axios.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,GBP-BRL,JPY-BRL,AUD-BRL,CHF-BRL,CAD-BRL,CNY-BRL,ARS-BRL,TRY-BRL,HKD-BRL,NZD-BRL,SEK-BRL,NOK-BRL,BRL-KRW,SGD-BRL,MXN-BRL,INR-BRL,RUB-BRL,AED-BRL')
     .then(res => {
       handlerMonetary(res.data);
     }).catch(err => {
@@ -79,6 +96,15 @@ const handlerMonetary = (data) => {
   setYuan(data.CNYBRL);
   setPesoArgentino(data.ARSBRL);
   setLiraTurca(data.TRYBRL);
+  setDolarHongKong(data.HKDBRL);
+  setDolarNeozelandes(data.NZDBRL);
+  setDolarSingapura(data.SGDBRL);
+  setCoroaSueca(data.NOKBRL);
+  setCoroaNorueguesa(data.NOKBRL);
+  setPesoMexicano(data.MXNBRL);
+  setRupiaIndiana(data.INRBRL);
+  setRublo(data.RUBBRL);
+  setDirham(data.AEDBRL);
 }
 
 
@@ -154,6 +180,42 @@ const handlerInputs = () => {
       calc(liraTurca.bid, "₺");
       handlerUpdateInfo(liraTurca.create_date);
       break;
+    case 'hkd':
+      calc(dolarHongKong.bid, "HK$");
+      handlerUpdateInfo(dolarHongKong.create_date);
+      break;
+    case 'nzd':
+      calc(dolarNeozelandes.bid, "NZ$");
+      handlerUpdateInfo(dolarNeozelandes.create_date);
+      break;
+    case 'sgd':
+      calc(dolarSingapura.bid, "S$");
+      handlerUpdateInfo(dolarSingapura.create_date);
+      break;
+    case 'sek':
+      calc(coroaSueca.bid, "kr");
+      handlerUpdateInfo(coroaSueca.create_date);
+      break;
+    case 'nok':
+      calc(coroaNorueguesa.bid, "kr");
+      handlerUpdateInfo(coroaNorueguesa.create_date);
+      break;
+    case 'mxn':
+      calc(pesoMexicano.bid, "$");
+      handlerUpdateInfo(pesoMexicano.create_date);
+      break;
+    case 'inr':
+      calc(rupiaIndiana.bid, "₹");
+      handlerUpdateInfo(rupiaIndiana.create_date);
+      break;
+    case 'rub':
+      calc(rublo.bid, "₽");
+      handlerUpdateInfo(rublo.create_date);
+      break;
+    case 'aed':
+      calc(dirham.bid, "د.إ");
+      handlerUpdateInfo(dirham.create_date);
+      break;
     default:
       setSaida('R$ 0,00');
       setShowErrorMessage(true);
@@ -177,7 +239,7 @@ const handlerInputs = () => {
      
         {showHome && (
            <View style={styles.container}>
- <TextInput onChangeText={setEntrada} style={styles.inputs} value={entrada.toString()}   keyboardType="numeric" label={"Valor em reais"}></TextInput>
+ <TextInput onChangeText={setEntrada} style={styles.inputs} value={entrada.toString()}   keyboardType="numeric" label={"Valor"}></TextInput>
       
  <View style={styles.inputs}>
  <DropDown
@@ -204,7 +266,7 @@ const handlerInputs = () => {
             <Button onPress={() => Linking.openURL("https://github.com/RubenFilipe07/Android-currency-converter-app")} mode="contained" style={styles.button} color="#f5f5f5" icon={'github'}>Github Repo</Button>
             <Button onPress={() => Linking.openURL("https://docs.awesomeapi.com.br/api-de-moedas")} mode="contained" style={styles.button} color="#36b93f" icon={'api'}>AwesomeApi</Button>
             <Button onPress={() => Linking.openURL("https://rubenfilipe07.me")} mode="contained" style={styles.button} color="#bababa" icon={'account-details'}>Sobre o autor</Button>
-            <Button onPress={() => Linking.openURL("https://rubenfilipe07.me")} mode="contained" style={styles.button} color="#263238" icon={'google-play'}>Outros Apps</Button>
+            <Button onPress={() => Linking.openURL("https://play.google.com/store/apps/dev?id=6757498449764923052")} mode="contained" style={styles.button} color="#263238" icon={'google-play'}>Outros Apps</Button>
             <Chip style={styles.reactNativeBadge} icon="react" mode="outlined" selectedColor="#15add6">Feito com React Native</Chip>
             <Text style={styles.footer}>Versão: {expo.version}</Text>
           </View>
