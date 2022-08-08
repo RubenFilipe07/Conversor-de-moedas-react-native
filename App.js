@@ -99,7 +99,7 @@ const handlerMonetary = (data) => {
   setDolarHongKong(data.HKDBRL);
   setDolarNeozelandes(data.NZDBRL);
   setDolarSingapura(data.SGDBRL);
-  setCoroaSueca(data.NOKBRL);
+  setCoroaSueca(data.SEKBRL);
   setCoroaNorueguesa(data.NOKBRL);
   setPesoMexicano(data.MXNBRL);
   setRupiaIndiana(data.INRBRL);
